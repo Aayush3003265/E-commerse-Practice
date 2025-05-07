@@ -3,6 +3,7 @@ import ProductCard from "@/components/products/ProductCard";
 import axios from "axios";
 import React from "react";
 import { Loader } from "./loading";
+import BackButton from "../_component/BackButton";
 const ProductsPage = async () => {
   const response = await axios.get(
     "https://ecommerce-test-api-green.vercel.app/api/products"
@@ -27,14 +28,18 @@ const ProductsPage = async () => {
     //     Count
     //   </button>
     // </div>
-
-    <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 ">
-      {products?.map((product, index) => (
-        <h2 key={index} className="text-xl text-white">
-          <ProductCard product={product} />
-        </h2>
-      ))}
-    </div>
+    <>
+      <div className="mb-4">
+        <BackButton />
+      </div>
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 ">
+        {products?.map((product, index) => (
+          <h2 key={index} className="text-xl text-white">
+            <ProductCard product={product} />
+          </h2>
+        ))}
+      </div>
+    </>
   );
 };
 

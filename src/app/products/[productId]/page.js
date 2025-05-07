@@ -1,13 +1,18 @@
 import BackButton from "@/app/_component/BackButton";
 import axios from "axios";
+import Image from "next/image";
 // import React, { useEffect, useState } from "react";
 
 const ProductId = async ({ params }) => {
   // const [product, setProduct] = useState(null);
 
-  const response = await axios.get(
-    `https://ecommerce-test-api-green.vercel.app/api/products/${params.productId}`
-  );
+  const response = await axios
+    .get(
+      `https://ecommerce-test-api-green.vercel.app/api/products/${params.productId}`
+    )
+    .catch((error) => {
+      throw new Error(error.response.data);
+    });
   const product = response.data;
 
   return (
@@ -18,13 +23,17 @@ const ProductId = async ({ params }) => {
           {/* Left Side: Image & Gallery */}
           <div>
             <div className="border p-4 rounded-xl shadow-sm">
-              <img
+              <Image
                 src={product.imageUrls[0]}
                 alt={product.title}
-                className="w-full h-[500px] object-contain"
+                height={500}
+                width={500}
+                className=" object-contain"
               />
+              {product.imageUrls?.map((image, index) => {
+                return <Image src={image[1]} alt={product.name} key={index} />;
+              })}
             </div>
-            {/* Thumbnail or similar images can be added here */}
           </div>
 
           {/* Right Side: Product Details */}
