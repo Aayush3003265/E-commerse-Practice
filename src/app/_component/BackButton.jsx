@@ -5,11 +5,13 @@ import React from "react";
 const BackButton = () => {
   const router = useRouter();
   return (
-    <button
-      className="border-white border-2 hover:cursor-pointer p-4"
-      onClick={() => router.back()}>
-      Back
-    </button>
+    <>
+      <button
+        className="border-black shadow-md border-2 hover:cursor-pointer px-6 py-2 text-xl"
+        onClick={() => router.back()}>
+        Back
+      </button>
+    </>
   );
 };
 

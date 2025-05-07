@@ -2,9 +2,10 @@
 import ProductCard from "@/components/products/ProductCard";
 import axios from "axios";
 import React from "react";
+import { Loader } from "./loading";
 const ProductsPage = async () => {
   const response = await axios.get(
-    "https://node-20250302.vercel.app/api/products"
+    "https://ecommerce-test-api-green.vercel.app/api/products"
   );
   const products = response.data;
   // console.log(products);
