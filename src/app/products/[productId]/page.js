@@ -1,3 +1,4 @@
+import { getProductById } from "@/api/products";
 import BackButton from "@/app/_component/BackButton";
 import axios from "axios";
 import Image from "next/image";
@@ -5,23 +6,24 @@ import Image from "next/image";
 
 const ProductId = async ({ params }) => {
   // const [product, setProduct] = useState(null);
+  const productId = await params.id;
 
-  const response = await axios
-    .get(
-      `https://ecommerce-test-api-green.vercel.app/api/products/${params.productId}`
-    )
-    .catch((error) => {
-      throw new Error(error.response.data);
-    });
-  const product = response.data;
+  const response = await getProductById(productId).catch((error) => {
+    throw new Error(error.response.data);
+  });
+  console.log(response.data);
 
+  return response.data;
+};
+const SanoProductById = async ({ params }) => {
+  const product = await ProductId({ params });
   return (
     <>
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="max-w-7xl mx-auto p-6 ">
         <BackButton />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-8">
           {/* Left Side: Image & Gallery */}
-          <div>
+          <div className="flex flex-col h-auto">
             <div className="border p-4 rounded-xl shadow-sm">
               <Image
                 src={product.imageUrls[0]}
@@ -30,8 +32,21 @@ const ProductId = async ({ params }) => {
                 width={500}
                 className=" object-contain"
               />
+            </div>
+            <div className="flex items-center justify-center gap-4 mt-4">
               {product.imageUrls?.map((image, index) => {
-                return <Image src={image[1]} alt={product.name} key={index} />;
+                return (
+                  <div className="border-2 border-slate-800 h-[100px] w-[100px] p-2">
+                    <Image
+                      src={image}
+                      width={100}
+                      height={100}
+                      alt={product.name}
+                      key={index}
+                      className="object-cover h-full w-full"
+                    />
+                  </div>
+                );
               })}
             </div>
           </div>
@@ -91,4 +106,5 @@ const ProductId = async ({ params }) => {
     </>
   );
 };
-export default ProductId;
+
+export default SanoProductById;

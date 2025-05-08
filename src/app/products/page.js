@@ -4,10 +4,9 @@ import axios from "axios";
 import React from "react";
 import { Loader } from "./loading";
 import BackButton from "../_component/BackButton";
+import { getProducts } from "@/api/products";
 const ProductsPage = async () => {
-  const response = await axios.get(
-    "https://ecommerce-test-api-green.vercel.app/api/products"
-  );
+  const response = await getProducts();
   const products = response.data;
   // console.log(products);
 
@@ -34,9 +33,9 @@ const ProductsPage = async () => {
       </div>
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 ">
         {products?.map((product, index) => (
-          <h2 key={index} className="text-xl text-white">
+          <div key={index} className="text-xl text-white">
             <ProductCard product={product} />
-          </h2>
+          </div>
         ))}
       </div>
     </>
