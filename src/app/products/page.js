@@ -5,6 +5,11 @@ import React from "react";
 import { Loader } from "./loading";
 import BackButton from "../_component/BackButton";
 import { getProducts } from "@/api/products";
+export const metadata = {
+  title: {
+    default: "Products",
+  },
+};
 const ProductsPage = async () => {
   const response = await getProducts();
   const products = response.data;
