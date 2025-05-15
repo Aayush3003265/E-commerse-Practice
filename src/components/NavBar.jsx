@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import NavLink from "./NavLink";
-import routeLink from "@/app/Routes";
+import routeLink from "@/app/constants/Routes";
 import Image from "next/image";
 import profileImg from "../app/assets/images/profile.png";
 

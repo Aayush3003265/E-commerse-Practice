@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import bg from "@/app/assets/images/login-bg.jpg";
 import cartPng from "@/app/assets/images/cart.jpg";
+import { ToastContainer } from "react-toastify";
 
 const AuthLayout = ({ children }) => {
   return (
@@ -23,6 +24,7 @@ const AuthLayout = ({ children }) => {
           className="h-full w-auto rounded-r-xl object-cover hidden md:block"
         />
       </div>
+      <ToastContainer />
     </section>
   );
 };
