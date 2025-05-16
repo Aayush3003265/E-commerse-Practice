@@ -24,9 +24,7 @@ const Login = () => {
     try {
       await loginAuth(data);
       router.push("/");
-      // console.log(response.data);
     } catch (error) {
-      // console.log(error.response.data);
       toast.error(error.response.data, {
         autoClose: 800,
       });
