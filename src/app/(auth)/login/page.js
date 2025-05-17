@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { EMAIL_REGEX } from "@/app/constants/Regex";
+import { useDispatch } from "react-redux";
+import { loginUser } from "@/redux/auth/authActions";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -18,19 +20,11 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const dispatch = useDispatch();
+
   //passing my form data to api for authentication
-  const submitForm = async (data) => {
-    setLoading(true);
-    try {
-      await loginAuth(data);
-      router.push("/");
-    } catch (error) {
-      toast.error(error.response.data, {
-        autoClose: 800,
-      });
-    } finally {
-      setLoading(false);
-    }
+  const submitForm = (data) => {
+    dispatch(loginUser(data));
   };
 
   // const { ref, name, onChange, onBlur } = register("email");
