@@ -1,18 +1,18 @@
 "use client";
 import { loginAuth } from "@/api/auth";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { EMAIL_REGEX } from "@/app/constants/Regex";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/auth/authActions";
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const { user, error, loading } = useSelector((state) => state);
   const router = useRouter();
   const {
     register,
@@ -21,6 +21,13 @@ const Login = () => {
   } = useForm();
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (user) return router.push("/");
+    if (error)
+      toast.error(error, {
+        autoClose: 850,
+      });
+  }, [user, error]);
 
   //passing my form data to api for authentication
   const submitForm = (data) => {

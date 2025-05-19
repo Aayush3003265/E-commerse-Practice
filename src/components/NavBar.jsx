@@ -1,12 +1,19 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { use, useEffect } from "react";
 import NavLink from "./NavLink";
 import routeLink from "@/app/constants/Routes";
 import Image from "next/image";
 import profileImg from "../app/assets/images/profile.png";
+import { useDispatch, useSelector } from "react-redux";
+import { IoIosLogOut } from "react-icons/io";
+import { logoutUser } from "@/redux/auth/authSlice";
 
 const NavBar = () => {
-  const isAuth = false;
+  // const isAuth = true;
+  const { user } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  useEffect;
   return (
     <>
       <nav className="bg-white dark:bg-gray-900  w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -24,23 +31,18 @@ const NavBar = () => {
             </span>
           </Link>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            {isAuth ? (
-              <button
-                type="button"
-                className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                id="user-menu-button"
-                aria-expanded="false"
-                data-dropdown-toggle="user-dropdown"
-                data-dropdown-placement="bottom">
-                <span className="sr-only">Open user menu</span>
-                <Image
-                  height={32}
-                  width={32}
-                  className="w-8 h-8 rounded-full"
-                  src={profileImg}
-                  alt="user photo"
-                />
-              </button>
+            {user ? (
+              <div className="flex gap-16">
+                <h4 className="text-blue-700 md:dark:text-white font-semibold">
+                  Hi! {user.name}
+                </h4>
+                <button
+                  className="text-white flex items-center font-bold gap-2"
+                  onClick={() => dispatch(logoutUser())}>
+                  Logout
+                  <IoIosLogOut />
+                </button>
+              </div>
             ) : (
               <Link href="/login">
                 <button
@@ -77,8 +79,8 @@ const NavBar = () => {
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               {routeLink.map((link, index) => {
-                return isAuth || !link.isAuth ? (
-                  <NavLink link={link} index={index} isAuth={isAuth} />
+                return user || !link.isAuth ? (
+                  <NavLink link={link} index={index} />
                 ) : null;
               })}
             </ul>

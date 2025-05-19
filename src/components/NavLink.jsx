@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NavLink = ({ link, index, isAuth }) => {
+const NavLink = ({ link, index }) => {
   const pathName = usePathname();
   const isActive =
     pathName == link.route ||
