@@ -4,6 +4,7 @@ import NavBar from "@/components/NavBar";
 import ClientJokes from "../components/ClientJokes";
 import config from "@/config";
 import ReduxProviders from "@/redux/provider";
+import MainLayout from "@/layouts/MainLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +26,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ReduxProviders>
-          <NavBar />
-          {children}
+          <MainLayout>
+            <NavBar />
+            {children}
+          </MainLayout>
         </ReduxProviders>
         {/* <ClientJokes /> */}
       </body>

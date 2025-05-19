@@ -1,11 +1,17 @@
+import { DARK_THEME, LIGHT_THEME } from "@/app/constants/theme";
 import { createSlice } from "@reduxjs/toolkit";
 
-const userpreferenceSLice = createSlice({
+const userpreferenceSlice = createSlice({
   name: "userpreference",
   initialState: {
-    theme: "light",
+    theme: LIGHT_THEME,
   },
-  reducers: {},
+  reducers: {
+    toggleTheme: (state) => {
+      state.theme = state.theme === LIGHT_THEME ? DARK_THEME : LIGHT_THEME;
+    },
+  },
 });
 
-export default userpreferenceSLice.reducer; 
+export const { toggleTheme } = userpreferenceSlice.actions;
+export default userpreferenceSlice.reducer;

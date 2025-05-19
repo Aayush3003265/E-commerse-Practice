@@ -3,15 +3,17 @@ import Link from "next/link";
 import React, { use, useEffect } from "react";
 import NavLink from "./NavLink";
 import routeLink from "@/app/constants/Routes";
-import Image from "next/image";
-import profileImg from "../app/assets/images/profile.png";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosLogOut } from "react-icons/io";
 import { logoutUser } from "@/redux/auth/authSlice";
+import { toggleTheme } from "@/redux/userPreferences/userPreferenceSlice";
+import { MdOutlineLightMode } from "react-icons/md";
+import { MdLightMode } from "react-icons/md";
 
 const NavBar = () => {
   // const isAuth = true;
   const { user } = useSelector((state) => state.auth);
+  const { theme } = useSelector((state) => state.userPreference);
   const dispatch = useDispatch();
   useEffect;
   return (
@@ -30,7 +32,14 @@ const NavBar = () => {
               E-BAZAR
             </span>
           </Link>
-          <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <div className="flex  md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            {/* theme toggle button  */}
+            <button
+              className="px-3 mr-6 rounded-xl border py-1 dark:text-amber-50"
+              onClick={() => dispatch(toggleTheme())}>
+              {theme == "light" ? <MdLightMode /> : <MdOutlineLightMode />}
+            </button>
+            {/* login logout button */}
             {user ? (
               <div className="flex gap-16">
                 <h4 className="text-blue-700 md:dark:text-white font-semibold">

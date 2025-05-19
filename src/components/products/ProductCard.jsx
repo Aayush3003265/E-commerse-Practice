@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
         </div>
       </Link>
 
-      <div className="pt-5 pb-10 px-6">
+      <div className="pt-5 pb-10 px-6 dark:bg-gray-300 rounded-t-sm">
         <span className="bg-amber-300 text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-amber-300 dark:text-black">
           {product.category}
         </span>

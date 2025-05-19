@@ -32,7 +32,7 @@ const ProductsPage = async () => {
     //     Count
     //   </button>
     // </div>
-    <>
+    <div>
       <div className="mb-4">
         <BackButton />
       </div>
@@ -43,7 +43,7 @@ const ProductsPage = async () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
