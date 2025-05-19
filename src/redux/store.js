@@ -1,13 +1,13 @@
 const { configureStore } = require("@reduxjs/toolkit");
 import persistReducer from "redux-persist/es/persistReducer";
-import authReducer from "./auth/authSlice.js";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
+import rootReducer from "./rootReducer.js";
 const persistConfig = {
   key: "ebaazar",
   storage,
 };
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: persistedReducer,
 });

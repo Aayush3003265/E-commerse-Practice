@@ -12,7 +12,7 @@ import { loginUser } from "@/redux/auth/authActions";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { user, error, loading } = useSelector((state) => state);
+  const { user, error, loading } = useSelector((state) => state.auth);
   const router = useRouter();
   const {
     register,

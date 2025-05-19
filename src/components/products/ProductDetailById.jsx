@@ -13,7 +13,7 @@ const ProductDetailById = ({ product }) => {
             <div className="border p-4 rounded-xl shadow-sm">
               <Image
                 src={product.imageUrls[0]}
-                alt={product.title}
+                alt={product.name}
                 height={500}
                 width={500}
                 className=" object-contain"
@@ -22,7 +22,9 @@ const ProductDetailById = ({ product }) => {
             <div className="flex items-center justify-center gap-4 mt-4">
               {product.imageUrls?.map((image, index) => {
                 return (
-                  <div className="border-2 border-slate-800 h-[100px] w-[100px] p-2">
+                  <div
+                    className="border-2 border-slate-800 h-[100px] w-[100px] p-2"
+                    key={index}>
                     <Image
                       src={image}
                       width={100}

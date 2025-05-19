@@ -1,3 +1,14 @@
 @import "tailwindcss";
 
 
+:root{
+    --primary:#b2261e;
+    --secondary:#ffdc95;
+}
+
+@custom-variant dark (&:where(.dark,.dark *));
+/* 
+/* @theme inline{
+    --color-primary:var(--primary);
+    --color-secondary:var(--secondary);
+} */ 
