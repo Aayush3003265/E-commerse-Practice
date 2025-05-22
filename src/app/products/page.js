@@ -48,3 +48,5 @@ const ProductsPage = async () => {
 };
 
 export default ProductsPage;
+
+// k xa
