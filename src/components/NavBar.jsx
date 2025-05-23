@@ -18,7 +18,7 @@ const NavBar = () => {
   useEffect;
   return (
     <>
-      <nav className="bg-white dark:bg-gray-900   w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+      <nav className="bg-white dark:bg-gray-900 sticky  w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
             href="/"
@@ -35,7 +35,7 @@ const NavBar = () => {
           <div className="flex  md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             {/* theme toggle button  */}
             <button
-              className="px-3 mr-6 rounded-xl border py-1 dark:text-amber-50"
+              className="px-2 py-2 mr-6  dark:text-amber-50"
               onClick={() => dispatch(toggleTheme())}>
               {theme == "light" ? <MdLightMode /> : <MdOutlineLightMode />}
             </button>
