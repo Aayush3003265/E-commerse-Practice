@@ -4,11 +4,11 @@ import React, { use, useEffect } from "react";
 import NavLink from "./NavLink";
 import routeLink from "@/app/constants/Routes";
 import { useDispatch, useSelector } from "react-redux";
-import { IoIosLogOut } from "react-icons/io";
 import { logoutUser } from "@/redux/auth/authSlice";
 import { toggleTheme } from "@/redux/userPreferences/userPreferenceSlice";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
+import AuthUser from "./AuthUser";
 
 const NavBar = () => {
   // const isAuth = true;
@@ -41,17 +41,7 @@ const NavBar = () => {
             </button>
             {/* login logout button */}
             {user ? (
-              <div className="flex gap-16">
-                <h4 className="text-blue-700 md:dark:text-white font-semibold">
-                  Hi! {user.name}
-                </h4>
-                <button
-                  className="text-white flex items-center font-bold gap-2"
-                  onClick={() => dispatch(logoutUser())}>
-                  Logout
-                  <IoIosLogOut />
-                </button>
-              </div>
+              <AuthUser user={user} />
             ) : (
               <Link href="/login">
                 <button

@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import cartImg from "@/app/assets/images/shopping-cart.png";
 import Link from "next/link";
+import AddToCart from "./AddToCart";
 
 const ProductCard = ({ product }) => {
   return (
@@ -32,9 +33,7 @@ const ProductCard = ({ product }) => {
         </Link>
 
         <p className="mt-2 font-bold text-black text-lg">$ {product.price}</p>
-        <button className="rounded shadow dark:shadow-white px-4 w-full mt-2 p-1 md:bg-blue-700 bg-amber-400 hover:cursor-pointer dark:bg-zinc-800">
-          Add to cart
-        </button>
+        <AddToCart />
       </div>
     </div>
   );
