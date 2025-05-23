@@ -22,8 +22,8 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
-      <div className="h-full px-3 pb-4 pt-20 overflow-y-auto bg-gray-100 dark:bg-gray-800">
+    <aside className="sticky top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 hidden sm:block">
+      <div className="h-full px-3 pb-4 pt-4  overflow-y-auto bg-gray-100 dark:bg-gray-800">
         <ul className="space-y-2 font-medium">
           {links.map((link) => {
             const isActive = pathName.startsWith(link.route);

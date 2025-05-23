@@ -1,7 +1,7 @@
 import React from "react";
 
 const UserManagementPage = () => {
-  return <div></div>;
+  return <div>This is user Management</div>;
 };
 
 export default UserManagementPage;
