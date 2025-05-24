@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { HiChartPie } from "react-icons/hi";
 import { RiUserSettingsFill } from "react-icons/ri";
+import { TbBasketCog } from "react-icons/tb";
 
 const Sidebar = () => {
   const pathName = usePathname();
@@ -18,6 +19,11 @@ const Sidebar = () => {
       route: "/user-Management",
       label: "User Management",
       icon: <RiUserSettingsFill className="w-5 h-5" />,
+    },
+    {
+      route: "/product-Management",
+      label: "Product Management",
+      icon: <TbBasketCog className="w-5 h-5" />,
     },
   ];
 
