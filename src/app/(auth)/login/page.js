@@ -36,7 +36,7 @@ const Login = () => {
 
   // const { ref, name, onChange, onBlur } = register("email");
   return (
-    <div>
+    <div className="dark:bg-slate-800 dark:text-white">
       <h1 className="text-center text-3xl font-bold mt-[80px]">Login Page</h1>
       <form className="py-16 px-12" onSubmit={handleSubmit(submitForm)}>
         <div className="pb-2">
@@ -53,7 +53,7 @@ const Login = () => {
                 message: "Invalid Email Address",
               },
             })}
-            className="border rounded-xl w-full p-2 mt-1"
+            className="border rounded-xl w-full p-2 mt-1 bg-slate-100 dark:bg-slate-700"
           />
           <p className="text-red-500 text-sm">{errors.email?.message}</p>
         </div>
