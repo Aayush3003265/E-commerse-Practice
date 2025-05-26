@@ -25,11 +25,7 @@ let routeLink = [
     name: "Courses",
     isAuth: false,
   },
-  {
-    route: "/news",
-    name: "News",
-    isAuth: true,
-  },
+
   {
     route: "/cart",
     name: "Cart",

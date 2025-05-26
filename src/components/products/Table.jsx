@@ -1,4 +1,6 @@
+import Image from "next/image";
 import React from "react";
+import { IoIosCog } from "react-icons/io";
 
 const ProductsTable = ({ products }) => {
   return (
@@ -10,19 +12,22 @@ const ProductsTable = ({ products }) => {
               Product name
             </th>
             <th scope="col" className="px-6 py-3">
+              Product name
+            </th>
+            <th scope="col" className="px-6 py-3">
               Brand
             </th>
             <th scope="col" className="px-6 py-3">
               Category
             </th>
             <th scope="col" className="px-6 py-3">
-              Price
+              Prices
             </th>
             <th scope="col" className="px-6 py-3">
               Created At
             </th>
-            <th scope="col" className="px-6 py-3">
-              Action
+            <th scope="col" className="px-6 py-3 ">
+              <IoIosCog className="h-6 w-6" />
             </th>
           </tr>
         </thead>
@@ -31,6 +36,15 @@ const ProductsTable = ({ products }) => {
             <tr
               key={index}
               className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
+              <td className="px-6 py-4 flex items-center justify-center">
+                <Image
+                  width={300}
+                  height={300}
+                  src={product.imageUrls[0]}
+                  alt={product.name}
+                  className="h-15 w-auto"
+                />
+              </td>
               <th
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
