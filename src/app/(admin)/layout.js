@@ -16,7 +16,7 @@ const AdminLayout = ({ children }) => {
   }, [router, user]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr]">
       <Sidebar />
       <div>{children}</div>
     </div>
