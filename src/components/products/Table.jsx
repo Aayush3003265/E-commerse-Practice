@@ -1,6 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import { IoIosCog } from "react-icons/io";
+import { MdModeEdit } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
+import Link from "next/link";
 
 const ProductsTable = ({ products }) => {
   return (
@@ -55,11 +58,22 @@ const ProductsTable = ({ products }) => {
               <td className="px-6 py-4">${product.price}</td>
               <td className="px-6 py-4">{product.createdAt}</td>
               <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                  Edit
-                </a>
+                <div className="flex gap-2">
+                  <Link
+                    href={`/product-Management/${product.id}/edit`}
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    <div>
+                      <MdModeEdit className="h-5 w-5 bg-blue-600 text-white p-1 rounded-md" />
+                    </div>
+                  </Link>
+                  <Link
+                    href={`/product-Management/${product.id}/edit`}
+                    className="font-medium text-blue-600 dark:text-blue-500  hover:underline">
+                    <div>
+                      <FaTrashAlt className="h-5 w-5 bg-red-600 text-white p-1 rounded-md" />
+                    </div>
+                  </Link>
+                </div>
               </td>
             </tr>
           ))}
