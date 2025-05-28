@@ -16,7 +16,7 @@ const AdminLayout = ({ children }) => {
   }, [router, user]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr]">
+    <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] bg-white dark:bg-gray-900">
       <Sidebar />
       <div>{children}</div>
     </div>
