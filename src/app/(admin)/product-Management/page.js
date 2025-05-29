@@ -1,11 +1,21 @@
 "use client";
-import { getProducts } from "@/api/products";
+import { getProducts, getProductsByUser } from "@/api/products";
 import ProductsTable from "@/components/products/Table";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import ProductLoading from "@/components/admin/ProductLoading";
 
 const ProductManagement = () => {
-  const response = getProducts();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState([true]);
+  useEffect(() => {
+    getProductsByUser()
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="py-8  ">
       <div className="flex items-center justify-between px-10 pb-6 dark:text-white">
@@ -17,7 +27,7 @@ const ProductManagement = () => {
           </div>
         </Link>
       </div>
-      <ProductsTable products={response.data} />
+      {loading ? <ProductLoading /> : <ProductsTable products={products} />}
     </section>
   );
 };

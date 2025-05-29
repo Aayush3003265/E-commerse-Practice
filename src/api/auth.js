@@ -1,8 +1,8 @@
 import config from "@/config";
-import api from "./api";
+import axios from "axios";
 
 const loginAuth = async ({ email, password }) => {
-  return await api.post(`${config.apiUrl}/api/auth/login`, {
+  return await axios.post(`${config.apiUrl}/api/auth/login`, {
     email,
     password,
   });
