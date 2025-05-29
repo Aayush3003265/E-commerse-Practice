@@ -1,18 +1,19 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { FaChevronLeft } from "react-icons/fa";
 
-const BackButton = () => {
+const AdminBackButton = () => {
   const router = useRouter();
   return (
-    <>
+    <div className="pb-4">
       <button
-        className="border-black shadow-md border-2 hover:cursor-pointer px-4 py-1 text-md"
+        className=" shadow-md  hover:cursor-pointer px-4 py-1 text-md"
         onClick={() => router.back()}>
-        Back
+        <FaChevronLeft />
       </button>
-    </>
+    </div>
   );
 };
 
-export default BackButton;
+export default AdminBackButton;

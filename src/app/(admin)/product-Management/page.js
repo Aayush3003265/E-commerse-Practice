@@ -1,10 +1,11 @@
 "use client";
-import { getProducts, getProductsByUser } from "@/api/products";
+import { getProductsByUser } from "@/api/products";
 import ProductsTable from "@/components/products/Table";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import ProductLoading from "@/components/admin/ProductLoading";
+import AdminBackButton from "@/components/admin/AdminTableBackButton";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
@@ -18,6 +19,10 @@ const ProductManagement = () => {
 
   return (
     <section className="py-8  ">
+      <div className="ml-4">
+        <AdminBackButton />
+      </div>
+
       <div className="flex items-center justify-between px-10 pb-6 dark:text-white">
         <h1 className="text-3xl font-semibold">Product Management</h1>
         <Link href={`/product-Management/add-Product`}>

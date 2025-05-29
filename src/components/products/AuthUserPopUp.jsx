@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 const AuthUserPopUp = ({ user, setShowPopup }) => {
   const dispatch = useDispatch();
   const isAllowed = allowedAdminRoles(user?.roles);
+
   return (
     <div
       className="absolute top-9 right-0 w-auto px-6 py-3 rounded-lg whitespace-nowrap shadow-md z-30 dark:bg-gray-600 bg-gray-100"

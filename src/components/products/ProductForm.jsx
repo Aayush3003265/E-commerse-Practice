@@ -1,16 +1,23 @@
 "use client";
 
-import BackButton from "@/app/_component/BackButton";
+import { createProduct } from "@/api/products";
 import { useForm } from "react-hook-form";
 
 const ProductForm = ({ product, categories }) => {
   const { register, handleSubmit } = useForm({
     values: product,
   });
-  function submitForm({ data }) {}
+
+  function submitForm(data) {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("brand", data.brand);
+    formData.append("category", data.category);
+    formData.append("price", data.price);
+    createProduct(formData);
+  }
   return (
     <div className="relative">
-      <BackButton className="top-0" />
       <form onSubmit={handleSubmit(submitForm)}>
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
           <div className="sm:col-span-2">
@@ -94,7 +101,6 @@ const ProductForm = ({ product, categories }) => {
               rows={8}
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="Your description here"
-              defaultValue={""}
               {...register("description")}
             />
           </div>
