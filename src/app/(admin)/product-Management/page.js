@@ -16,6 +16,7 @@ const ProductManagement = () => {
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   }, []);
+  // console.log(products);
 
   return (
     <section className="py-8  ">
@@ -38,3 +39,4 @@ const ProductManagement = () => {
 };
 
 export default ProductManagement;
+2334L7400722

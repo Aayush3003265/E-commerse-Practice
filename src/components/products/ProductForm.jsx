@@ -1,20 +1,27 @@
 "use client";
 
 import { createProduct } from "@/api/products";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const ProductForm = ({ product, categories }) => {
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm({
     values: product,
   });
 
   function submitForm(data) {
+    setLoading(true);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("brand", data.brand);
     formData.append("category", data.category);
     formData.append("price", data.price);
-    createProduct(formData);
+    createProduct(formData)
+      .then(() => toast.success("Added Successfully", { autoClose: 750 }))
+      .catch((error) => toast.error(error.response.data, { autoClose: 750 }))
+      .finally(setLoading(false));
   }
   return (
     <div className="relative">

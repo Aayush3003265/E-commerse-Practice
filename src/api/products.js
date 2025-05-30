@@ -18,7 +18,9 @@ const getProductCategories = async () => {
   return await axios.get(`${config.apiUrl}/api/products/categories`);
 };
 
-const getProductsByUser = async () => {};
+const getProductsByUser = async () => {
+  return await axios.get(`${config.apiUrl}/api/products/user`);
+};
 
 export {
   getProducts,
