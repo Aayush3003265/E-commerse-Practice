@@ -4,24 +4,34 @@ import { createProduct } from "@/api/products";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import Spinner from "./Spinner";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import Image from "next/image";
 
 const ProductForm = ({ product, categories }) => {
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit } = useForm({
+  const [localImageUrls, setLocalImageUrls] = useState([]);
+  const { register, handleSubmit, reset } = useForm({
     values: product,
   });
 
   function submitForm(data) {
     setLoading(true);
+
+    // console.log(loading);
+
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("brand", data.brand);
     formData.append("category", data.category);
     formData.append("price", data.price);
     createProduct(formData)
-      .then(() => toast.success("Added Successfully", { autoClose: 750 }))
+      .then(
+        () => toast.success("Added Successfully", { autoClose: 750 }),
+        reset()
+      )
       .catch((error) => toast.error(error.response.data, { autoClose: 750 }))
-      .finally(setLoading(false));
+      .finally(() => setLoading(false));
   }
   return (
     <div className="relative">
@@ -111,11 +121,54 @@ const ProductForm = ({ product, categories }) => {
               {...register("description")}
             />
           </div>
+
+          <div className="flex items-center justify-center sm:col-span-2">
+            <label
+              htmlFor="images"
+              className="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <IoCloudUploadOutline className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" />
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold">Click to upload</span> or drag
+                  and drop
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  JPEG, PNG, JPG (MAX. 800x400px)
+                </p>
+              </div>
+              <input
+                id="images"
+                accept=".png,.jpg,.jpeg"
+                type="file"
+                className="hidden"
+                multiple
+                onChange={(e) => {
+                  const urls = Array.from(e.target.files).map((image) =>
+                    URL.createObjectURL(image)
+                  );
+                  setLocalImageUrls((prev) => [...prev, ...urls]);
+                }}
+              />
+            </label>
+          </div>
+          {localImageUrls.length > 0 &&
+            localImageUrls.map((url, index) => (
+              <Image
+                src={url}
+                alt={"image"}
+                key={index}
+                height={200}
+                width={200}
+                className="h-14 w-auto bg-gray-400 border p-1"
+              />
+            ))}
         </div>
         <button
           type="submit"
-          className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 border dark:text-white dark:border-slate-300 hover:bg-primary-800">
+          className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white  bg-blue-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 border dark:text-white dark:border-slate-300 hover:bg-primary-800 disabled:opacity-80 hover:opacity-80"
+          disabled={loading}>
           {product ? "Edit Product" : "Add product"}
+          {loading && <Spinner className="ml-2 h-5 w-5" />}
         </button>
       </form>
     </div>

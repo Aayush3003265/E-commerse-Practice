@@ -19,7 +19,7 @@ const getProductCategories = async () => {
 };
 
 const getProductsByUser = async () => {
-  return await axios.get(`${config.apiUrl}/api/products/user`);
+  return await api.get(`/api/products/users`);
 };
 
 export {
