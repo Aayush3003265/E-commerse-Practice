@@ -19,7 +19,11 @@ const ProductEditPage = async ({ params }) => {
           <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white ">
             Edit <span className="underline italic text-2xl">{data?.name}</span>
           </h2>
-          <AddProduct product={data} categories={categoriesResponse.data} />
+          <AddProduct
+            id={id}
+            product={data}
+            categories={categoriesResponse.data}
+          />
         </div>
       </section>
     </div>

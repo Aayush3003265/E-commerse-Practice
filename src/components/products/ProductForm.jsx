@@ -1,6 +1,6 @@
 "use client";
 
-import { createProduct } from "@/api/products";
+import { createProduct, updateProduct } from "@/api/products";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -8,31 +8,49 @@ import Spinner from "./Spinner";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Image from "next/image";
 
-const ProductForm = ({ product, categories }) => {
+const ProductForm = ({ id, product, categories }) => {
   const [loading, setLoading] = useState(false);
   const [localImageUrls, setLocalImageUrls] = useState([]);
+  const [productImages, setProductImages] = useState([]);
   const { register, handleSubmit, reset } = useForm({
     values: product,
   });
 
-  function submitForm(data) {
+  const prepareData = (data) => {
     setLoading(true);
-
     // console.log(loading);
-
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("brand", data.brand);
     formData.append("category", data.category);
     formData.append("price", data.price);
-    createProduct(formData)
-      .then(
-        () => toast.success("Added Successfully", { autoClose: 750 }),
-        reset()
-      )
-      .catch((error) => toast.error(error.response.data, { autoClose: 750 }))
-      .finally(() => setLoading(false));
+    if (data.description) {
+      formData.append("description", data.description);
+    }
+    productImages.map((image) => {
+      formData.append("images", image);
+    });
+
+    return formData;
+  };
+
+  async function submitForm(data) {
+    const formData = prepareData(data);
+    try {
+      if (product) {
+        await updateProduct(id, formData);
+        toast.success("Updated Successfully", { autoClose: 750 });
+        return;
+      }
+      await createProduct(formData);
+      toast.success("Added Successfully", { autoClose: 750 }), reset();
+    } catch (error) {
+      toast.error(error.response.data, { autoClose: 750 });
+    } finally {
+      setLoading(false), setProductImages([]), setLocalImageUrls([]);
+    }
   }
+
   return (
     <div className="relative">
       <form onSubmit={handleSubmit(submitForm)}>
@@ -143,25 +161,30 @@ const ProductForm = ({ product, categories }) => {
                 className="hidden"
                 multiple
                 onChange={(e) => {
-                  const urls = Array.from(e.target.files).map((image) =>
-                    URL.createObjectURL(image)
-                  );
+                  const images = [];
+                  const urls = Array.from(e.target.files).map((image) => {
+                    images.push(image), URL.createObjectURL(image);
+                  });
                   setLocalImageUrls((prev) => [...prev, ...urls]);
+                  setProductImages(images);
                 }}
               />
             </label>
           </div>
-          {localImageUrls.length > 0 &&
-            localImageUrls.map((url, index) => (
-              <Image
-                src={url}
-                alt={"image"}
-                key={index}
-                height={200}
-                width={200}
-                className="h-14 w-auto bg-gray-400 border p-1"
-              />
-            ))}
+          {localImageUrls.length > 0 && (
+            <div className="flex gap-3">
+              {localImageUrls.map((url, index) => (
+                <Image
+                  src={url}
+                  alt={"image"}
+                  key={index}
+                  height={200}
+                  width={200}
+                  className="h-14 w-auto bg-gray-400 border p-1"
+                />
+              ))}
+            </div>
+          )}
         </div>
         <button
           type="submit"

@@ -6,6 +6,13 @@ const createProduct = async (data) => {
   return await api.post(`/api/products`, data);
 };
 
+const updateProduct = async (id, data) => {
+  return await api.put(`/api/products/${id}`, data);
+};
+const deleteProduct = async (id) => {
+  return await api.delete(`/api/products/${id}`);
+};
+
 const getProducts = async () => {
   return await axios.get(`${config.apiUrl}/api/products`);
 };
@@ -28,4 +35,6 @@ export {
   getProductsByUser,
   getProductCategories,
   createProduct,
+  updateProduct,
+  deleteProduct,
 };

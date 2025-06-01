@@ -1,11 +1,26 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { IoIosCog } from "react-icons/io";
 import { MdModeEdit } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
+import placeholder from "@/app/assets/images/shopping-cart.png";
+import { deleteProduct } from "@/api/products";
+import { toast } from "react-toastify";
+import Modal from "./Modal";
 
 const ProductsTable = ({ products }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const removeProduct = (product) => {
+    try {
+      setShowModal(true);
+      setSelectedProduct(product);
+      // deleteProduct(id);
+    } catch (error) {
+      toast.error("Error");
+    }
+  };
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mx-8 dark:border-slate-300 dark:shadow-slate-300 dark:border">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -45,7 +60,7 @@ const ProductsTable = ({ products }) => {
                 <Image
                   width={300}
                   height={300}
-                  src={product.imageUrls[0]}
+                  src={product.imageUrls?.[0] ?? placeholder}
                   alt={product.name}
                   className="h-15 w-auto"
                 />
@@ -68,19 +83,26 @@ const ProductsTable = ({ products }) => {
                       <MdModeEdit className="h-5 w-5 bg-blue-600 text-white p-1 rounded-md" />
                     </div>
                   </Link>
-                  <Link
-                    href={`/product-Management/${product.id}/edit`}
+                  <button
+                    // href={`/product-Management/${product.id}/edit`}
+                    onClick={() => removeProduct(product)}
                     className="font-medium text-blue-600 dark:text-blue-500  hover:underline">
                     <div>
                       <FaTrashAlt className="h-5 w-5 bg-red-600 text-white p-1 rounded-md" />
                     </div>
-                  </Link>
+                  </button>
                 </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        product={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
+      />
     </div>
   );
 };
