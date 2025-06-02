@@ -2,9 +2,9 @@ import React from "react";
 
 const Drawer = () => {
   return (
-    <div>
+    <div className="h-svh w-full bg-[#00000033] z-50 fixed top-0 left-0 right-0 bottom-0">
       {/* <!-- drawer component --> */}
-      <div className="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform translate-x-0 bg-white dark:bg-gray-800">
+      <div className="fixed top-0 left-0 z-30 w-64 h-screen p-4 overflow-y-auto transition-transform translate-x-0 bg-white dark:bg-gray-800">
         <h5 className="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
           Menu
         </h5>
