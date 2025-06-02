@@ -1,12 +1,18 @@
 import React from "react";
 
-const Drawer = () => {
+const Drawer = ({ showFilter = false, setShowFilter }) => {
   return (
-    <div className="h-svh w-full bg-[#00000033] z-50 fixed top-0 left-0 right-0 bottom-0">
+    <div
+      className={`h-svh w-full bg-[#00000044] z-50 fixed top-0 left-0 right-0 bottom-0 ${
+        showFilter ? "block" : "hidden"
+      }`}>
       {/* <!-- drawer component --> */}
-      <div className="fixed top-0 left-0 z-30 w-64 h-screen p-4 overflow-y-auto transition-transform translate-x-0 bg-white dark:bg-gray-800">
+      <div
+        className={`fixed top-0 left-0 z-30 w-64 h-screen py-10 px-2 overflow-y-auto transition-transform ${
+          showFilter ? "translate-x-0" : "-translate-x-64"
+        }  bg-white dark:bg-gray-800`}>
         <h5 className="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
-          Menu
+          Filter Products
         </h5>
         <button className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
           <svg
