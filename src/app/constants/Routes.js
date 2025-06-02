@@ -1,36 +1,7 @@
-let routeLink = [
-  {
-    route: "/",
-    name: "Home",
-    isAuth: false,
-  },
-  {
-    route: "/about",
-    name: "About",
-    isAuth: false,
-  },
-
-  {
-    route: "/contact",
-    name: "Contact",
-    isAuth: false,
-  },
-  {
-    route: "/products",
-    name: "Products",
-    isAuth: false,
-  },
-  {
-    route: "/courses",
-    name: "Courses",
-    isAuth: false,
-  },
-
-  {
-    route: "/cart",
-    name: "Cart",
-    isAuth: true,
-  },
-];
-
-export default routeLink;
+export const LOGIN_ROUTE = "/login";
+export const REGISTER_ROUTE = "/register";
+export const PRODUCT_MANAGEMENT_ROUTE = "/product-Management";
+export const DASHBOARD_ROUTE = "/dashboard";
+export const HOME_ROUTE = "/";
+export const PRODUCTS_ROUTE = "/products";
+export const USER_MANAGEMENT_ROUTE = "/user-Management";

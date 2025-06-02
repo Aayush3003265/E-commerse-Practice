@@ -6,6 +6,7 @@ import rootReducer from "./rootReducer.js";
 const persistConfig = {
   key: "ebaazar",
   storage,
+  whitelist: ["auth", "userPreference"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

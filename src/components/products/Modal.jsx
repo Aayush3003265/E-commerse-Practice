@@ -4,14 +4,18 @@ import { FaExclamationTriangle } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import Spinner from "./Spinner";
+import { useDispatch } from "react-redux";
+import { setDeleteStatus } from "@/redux/product/productSlice";
 
 const Modal = ({ showModal, setShowModal, product, setSelectedProduct }) => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const confirmDelete = () => {
     setLoading(true);
     try {
       deleteProduct(product?.id);
       toast.success("Deleted Sucessfully", { autoClose: 750 });
+      dispatch(setDeleteStatus("success"));
     } catch (error) {
       toast.error(error.response.data, { autoClose: 750 });
     } finally {

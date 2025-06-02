@@ -5,6 +5,7 @@ import React from "react";
 import { Loader } from "./loading";
 import BackButton from "../_component/BackButton";
 import { getProducts } from "@/api/products";
+import Drawer from "@/components/products/Drawer";
 export const metadata = {
   title: {
     default: "Products",
@@ -13,25 +14,7 @@ export const metadata = {
 const ProductsPage = async () => {
   const response = await getProducts();
   const products = response.data;
-  // console.log(products);
-
-  // const [count, setCount] = useState(0);
-  // const router = useRouter();
-  // useEffect(() => {
-  //   if (count > 5) {
-  //     router.push("/");
-  //   }
-  // }, [count]);
   return (
-    // <div>
-    //   This is ProductsPage
-    //   <p>Count:{count}</p>
-    //   <button
-    //     className="bg-red-500 rounded-3xl p-2.5 hover:cursor-pointer"
-    //     onClick={() => setCount(() => count + 1)}>
-    //     Count
-    //   </button>
-    // </div>
     <div>
       <div className="mb-4">
         <BackButton />
@@ -43,6 +26,7 @@ const ProductsPage = async () => {
           </div>
         ))}
       </div>
+      <Drawer />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import React from "react";
 import cartImg from "@/app/assets/images/shopping-cart.png";
 import Link from "next/link";
 import AddToCart from "./AddToCart";
+import { PRODUCTS_ROUTE } from "@/app/constants/Routes";
 
 const ProductCard = ({ product }) => {
   return (
@@ -26,7 +27,7 @@ const ProductCard = ({ product }) => {
         <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300">
           {product.brand}
         </span>
-        <Link href={`/products/${product.id}`}>
+        <Link href={`${PRODUCTS_ROUTE}/${product.id}`}>
           <h2 className="text-2xl font-semibold truncate mt-2 text-black hover:underline">
             {product.name}
           </h2>
