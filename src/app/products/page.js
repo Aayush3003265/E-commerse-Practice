@@ -11,8 +11,8 @@ export const metadata = {
     default: "Products",
   },
 };
-const ProductsPage = async () => {
-  const response = await getProducts();
+const ProductsPage = async ({ searchParams }) => {
+  const response = await getProducts(await searchParams);
   const products = response.data;
   return (
     <div>
@@ -26,7 +26,6 @@ const ProductsPage = async () => {
           </div>
         ))}
       </div>
-      <Drawer />
     </div>
   );
 };
