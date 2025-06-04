@@ -11,14 +11,15 @@ const Drawer = ({ showFilter = true, setShowFilter }) => {
   const [sort, setSort] = useState(JSON.stringify({ createdAt: -1 }));
   const router = useRouter();
   const setfilters = () => {
-    setLoading(true);
+    // setLoading(true);
     const params = new URLSearchParams();
     params.set("min", minPrice);
     params.set("max", maxPrice);
     params.set("sort", sort);
     router.push(`?${params.toString()}`);
+    setShowFilter(false);
 
-    setLoading(false);
+    // setLoading(false);
   };
   return (
     <div className={showFilter ? "block" : "hidden"}>
@@ -44,22 +45,23 @@ const Drawer = ({ showFilter = true, setShowFilter }) => {
           <div className="py-2 pb-8">
             <div>
               <label
-                htmlFor="countries"
+                htmlFor="order-by"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Order By:
               </label>
               <select
+                value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                id="countries"
+                id="order-by"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value={JSON.stringify({ createdAt: -1 })}>
                   Latest
                 </option>
                 <option value={JSON.stringify({ createdAt: 1 })}>Oldest</option>
-                <option value={JSON.stringify({ price: -1 })}>
-                  Price: low to hogh
+                <option value={JSON.stringify({ price: 1 })}>
+                  Price: low to high
                 </option>
-                <option value={JSON.stringify({ createdAt: 1 })}>
+                <option value={JSON.stringify({ price: -1 })}>
                   Price: high to low
                 </option>
               </select>
