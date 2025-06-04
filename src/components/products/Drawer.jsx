@@ -1,34 +1,46 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Spinner from "./Spinner";
 import { useRouter } from "next/navigation";
 
-const Drawer = ({ showFilter = true, setShowFilter }) => {
+const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
   const [loading, setLoading] = useState(false);
   const [maxPrice, setMaxPrice] = useState(10000000000);
   const [minPrice, setMinPrice] = useState(0);
+  const [brandsFilter, setBrandsFilter] = useState([]);
+
   const [sort, setSort] = useState(JSON.stringify({ createdAt: -1 }));
+  const handleBrandsFilterChange = (brand) => {
+    setBrandsFilter((prev) =>
+      prev.includes(brand)
+        ? prev.filter((item) => item != brand)
+        : [...brandsFilter, brand]
+    );
+  };
+
+  // useEffect(() => {
+  //   console.log(brandsFilter);
+  // }, [brandsFilter]);
   const router = useRouter();
   const setfilters = () => {
-    // setLoading(true);
     const params = new URLSearchParams();
     params.set("min", minPrice);
     params.set("max", maxPrice);
     params.set("sort", sort);
+    params.set("brands", brandsFilter.join(","));
     router.push(`?${params.toString()}`);
     setShowFilter(false);
-
-    // setLoading(false);
   };
+
   return (
     <div className={showFilter ? "block" : "hidden"}>
       <div
-        className={`h-svh w-full bg-[#00000044] z-30 fixed top-0 left-0 right-0 bottom-0`}
+        className={`h-100svh w-full bg-[#00000044] z-30 fixed top-0 left-0 right-0 bottom-0`}
         onClick={() => setShowFilter(false)}></div>
       <div
-        className={`fixed top-18 left-0 z-30 w-64 h-screen py-4 px-2 overflow-y-auto transition-transform ${
-          showFilter ? "translate-x-0" : "-translate-x-64"
+        className={`fixed top-18 left-0 z-30 w-72 h-screen py-4 px-2 overflow-y-auto transition-transform ${
+          showFilter ? "translate-x-0" : "-translate-x-68"
         }  bg-white dark:bg-gray-800`}>
         <div className="flex items-center justify-between">
           <h5 className="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
@@ -41,8 +53,10 @@ const Drawer = ({ showFilter = true, setShowFilter }) => {
             <span className="sr-only">Close menu</span>
           </button>
         </div>
+
+        {/* order by */}
         <div className="py-4 px-2 overflow-y-auto text-center ">
-          <div className="py-2 pb-8">
+          <div className="py-2 pb-3">
             <div>
               <label
                 htmlFor="order-by"
@@ -64,13 +78,16 @@ const Drawer = ({ showFilter = true, setShowFilter }) => {
                 <option value={JSON.stringify({ price: -1 })}>
                   Price: high to low
                 </option>
+                <option value={JSON.stringify({ name: 1 })}>A - Z</option>
+                <option value={JSON.stringify({ name: -1 })}>Z - A</option>
               </select>
             </div>
           </div>
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Filter Products:
-          </label>
-          <div className="px-2 text-center text-white flex items-center justify-center gap-1">
+
+          <div className="px-2 text-center  text-white  gap-1">
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+              Filter Products:
+            </label>
             <input
               type="number"
               id="min"
@@ -96,6 +113,58 @@ const Drawer = ({ showFilter = true, setShowFilter }) => {
               }}
             />
           </div>
+        </div>
+        <div className="pb-1 px-2 overflow-y-auto text-center ">
+          <div className="py-1 pb-1">
+            <div>
+              <label
+                htmlFor="order-by"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Category
+              </label>
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                id="order-by"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value={JSON.stringify({ createdAt: -1 })}>
+                  Latest
+                </option>
+                <option value={JSON.stringify({ createdAt: 1 })}>Oldest</option>
+                <option value={JSON.stringify({ price: 1 })}>
+                  Price: low to high
+                </option>
+                <option value={JSON.stringify({ price: -1 })}>
+                  Price: high to low
+                </option>
+                <option value={JSON.stringify({ name: 1 })}>A - Z</option>
+                <option value={JSON.stringify({ name: -1 })}>Z - A</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="pb-3 text-center">
+          <label
+            htmlFor="brands"
+            className="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+            Brands
+          </label>
+          {brands?.map((brand, index) => (
+            <div key={index} className="flex items-center">
+              <input
+                id={brand}
+                onChange={() => handleBrandsFilterChange(brand)}
+                type="checkbox"
+                className="rounded-sm"
+                checked={brandsFilter.includes(brand)}
+              />
+              <label
+                htmlFor={brand}
+                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                {brand}
+              </label>
+            </div>
+          ))}
         </div>
         <button
           type="submit"

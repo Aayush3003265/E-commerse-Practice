@@ -23,6 +23,10 @@ const getProductById = async (productId) => {
   return await axios.get(`${config.apiUrl}/api/products/${productId}`);
 };
 
+const getBrands = async () => {
+  return await axios.get(`${config.apiUrl}/api/products/brands`);
+};
+
 const getProductCategories = async () => {
   return await axios.get(`${config.apiUrl}/api/products/categories`);
 };
@@ -39,4 +43,5 @@ export {
   createProduct,
   updateProduct,
   deleteProduct,
+  getBrands,
 };

@@ -8,7 +8,10 @@ import { useDispatch } from "react-redux";
 const AuthUserPopUp = ({ user, setShowPopup }) => {
   const dispatch = useDispatch();
   const isAllowed = allowedAdminRoles(user?.roles);
-
+  const Logout = () => {
+    dispatch(logoutUser());
+    localStorage.removeItem("authToken");
+  };
   return (
     <div
       className="absolute top-9 right-0 w-auto px-6 py-3 rounded-lg whitespace-nowrap shadow-md z-30 dark:bg-gray-600 bg-gray-100"
@@ -33,7 +36,7 @@ const AuthUserPopUp = ({ user, setShowPopup }) => {
 
       <button
         className="text-white flex items-center py-2 font-bold gap-2 w-full px-1 rounded-md  hover:bg-blue-400 hover:cursor-pointer bg-blue-500 my-1"
-        onClick={() => dispatch(logoutUser())}>
+        onClick={Logout}>
         Logout
         <IoIosLogOut />
       </button>

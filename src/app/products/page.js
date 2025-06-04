@@ -4,7 +4,7 @@ import axios from "axios";
 import React from "react";
 import { Loader } from "./loading";
 import BackButton from "../_component/BackButton";
-import { getProducts } from "@/api/products";
+import { getBrands, getProducts } from "@/api/products";
 import Drawer from "@/components/products/Drawer";
 export const metadata = {
   title: {
@@ -13,7 +13,9 @@ export const metadata = {
 };
 const ProductsPage = async ({ searchParams }) => {
   const response = await getProducts(await searchParams);
-  const products = response.data;
+
+  const products = response?.data;
+  
   return (
     <div>
       <div className="mb-4">

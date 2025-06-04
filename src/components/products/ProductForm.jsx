@@ -161,10 +161,10 @@ const ProductForm = ({ id, product, categories }) => {
                 className="hidden"
                 multiple
                 onChange={(e) => {
-                  const images = [];
-                  const urls = Array.from(e.target.files).map((image) => {
-                    images.push(image), URL.createObjectURL(image);
-                  });
+                  const images = Array.from(e.target.files);
+                  const urls = images.map((image) =>
+                    URL.createObjectURL(image)
+                  );
                   setLocalImageUrls((prev) => [...prev, ...urls]);
                   setProductImages(images);
                 }}
@@ -175,7 +175,7 @@ const ProductForm = ({ id, product, categories }) => {
             <div className="flex gap-3">
               {localImageUrls.map((url, index) => (
                 <Image
-                  src={url}
+                  src={url ? url : ""}
                   alt={"image"}
                   key={index}
                   height={200}
