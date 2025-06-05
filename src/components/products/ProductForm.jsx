@@ -27,9 +27,12 @@ const ProductForm = ({ id, product, categories }) => {
     if (data.description) {
       formData.append("description", data.description);
     }
-    productImages.map((image) => {
-      formData.append("images", image);
-    });
+
+    if (productImages.length > 0) {
+      productImages.map((image) => {
+        formData.append("images", image);
+      });
+    }
 
     return formData;
   };

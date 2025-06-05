@@ -3,14 +3,22 @@ import React, { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Spinner from "./Spinner";
 import { useRouter } from "next/navigation";
+import { PRODUCTS_ROUTE } from "@/app/constants/Routes";
 
-const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
+const DEFAULT_SORT = JSON.stringify({ createdAt: -1 });
+const DEFAULT_MIN_PRICE = 0;
+const DEFAULT_MAX_PRICE = 10000000000;
+const DEFAULT_BRANDS_FILLTER = [];
+const DEFAULT_CATEGORY_FILTER = "";
+
+const Drawer = ({ showFilter = true, setShowFilter, brands, categories }) => {
   const [loading, setLoading] = useState(false);
-  const [maxPrice, setMaxPrice] = useState(10000000000);
-  const [minPrice, setMinPrice] = useState(0);
-  const [brandsFilter, setBrandsFilter] = useState([]);
+  const [maxPrice, setMaxPrice] = useState(DEFAULT_MAX_PRICE);
+  const [minPrice, setMinPrice] = useState(DEFAULT_MIN_PRICE);
+  const [brandsFilter, setBrandsFilter] = useState(DEFAULT_BRANDS_FILLTER);
+  const [categoryFilter, setCategoryFilter] = useState(DEFAULT_CATEGORY_FILTER);
 
-  const [sort, setSort] = useState(JSON.stringify({ createdAt: -1 }));
+  const [sort, setSort] = useState(DEFAULT_SORT);
   const handleBrandsFilterChange = (brand) => {
     setBrandsFilter((prev) =>
       prev.includes(brand)
@@ -19,9 +27,9 @@ const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
     );
   };
 
-  // useEffect(() => {
-  //   console.log(brandsFilter);
-  // }, [brandsFilter]);
+  useEffect(() => {
+    console.log(categories);
+  }, []);
   const router = useRouter();
   const setfilters = () => {
     const params = new URLSearchParams();
@@ -29,17 +37,28 @@ const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
     params.set("max", maxPrice);
     params.set("sort", sort);
     params.set("brands", brandsFilter.join(","));
+    params.set("category", categoryFilter);
     router.push(`?${params.toString()}`);
     setShowFilter(false);
+  };
+
+  const resetFilter = () => {
+    setSort(DEFAULT_SORT);
+    setMaxPrice(DEFAULT_MAX_PRICE);
+    setMinPrice(DEFAULT_MIN_PRICE);
+    setBrandsFilter(DEFAULT_BRANDS_FILLTER);
+    setCategoryFilter(DEFAULT_CATEGORY_FILTER);
+    setShowFilter(false);
+    router.push(PRODUCTS_ROUTE);
   };
 
   return (
     <div className={showFilter ? "block" : "hidden"}>
       <div
-        className={`h-100svh w-full bg-[#00000044] z-30 fixed top-0 left-0 right-0 bottom-0`}
+        className={`h-full w-full bg-[#00000044] z-30 fixed top-0 left-0 right-0 bottom-0`}
         onClick={() => setShowFilter(false)}></div>
       <div
-        className={`fixed top-18 left-0 z-30 w-72 h-screen py-4 px-2 overflow-y-auto transition-transform ${
+        className={`fixed top-18 left-0 z-30 w-72 h-screen pt-4 px-2 overflow-y-auto transition-transform  ${
           showFilter ? "translate-x-0" : "-translate-x-68"
         }  bg-white dark:bg-gray-800`}>
         <div className="flex items-center justify-between">
@@ -55,7 +74,7 @@ const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
         </div>
 
         {/* order by */}
-        <div className="py-4 px-2 overflow-y-auto text-center ">
+        <div className=" px-2 overflow-y-auto text-center ">
           <div className="py-2 pb-3">
             <div>
               <label
@@ -83,11 +102,10 @@ const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
               </select>
             </div>
           </div>
-
-          <div className="px-2 text-center  text-white  gap-1">
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-              Filter Products:
-            </label>
+          <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            Filter Products:
+          </label>
+          <div className="px-2 text-center  text-white  gap-1 flex">
             <input
               type="number"
               id="min"
@@ -123,22 +141,15 @@ const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
                 Category
               </label>
               <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-                id="order-by"
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                id="category"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value={JSON.stringify({ createdAt: -1 })}>
-                  Latest
-                </option>
-                <option value={JSON.stringify({ createdAt: 1 })}>Oldest</option>
-                <option value={JSON.stringify({ price: 1 })}>
-                  Price: low to high
-                </option>
-                <option value={JSON.stringify({ price: -1 })}>
-                  Price: high to low
-                </option>
-                <option value={JSON.stringify({ name: 1 })}>A - Z</option>
-                <option value={JSON.stringify({ name: -1 })}>Z - A</option>
+                <option value={""}>Select Category</option>
+                {categories?.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -166,14 +177,24 @@ const Drawer = ({ showFilter = true, setShowFilter, brands }) => {
             </div>
           ))}
         </div>
-        <button
-          type="submit"
-          onClick={setfilters}
-          className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white  bg-blue-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 border dark:text-white dark:border-slate-300 hover:bg-primary-800 disabled:opacity-80 hover:opacity-80"
-          disabled={loading}>
-          Apply Filters
-          {loading && <Spinner className="ml-2 h-5 w-5" />}
-        </button>
+        <div className="flex gap-5 justify-center">
+          <button
+            type="submit"
+            onClick={setfilters}
+            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white  bg-blue-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 border dark:text-white dark:border-slate-300 hover:bg-primary-800 disabled:opacity-80 hover:opacity-80 hover:cursor-pointer"
+            disabled={loading}>
+            Apply Filters
+            {loading && <Spinner className="ml-2 h-5 w-5" />}
+          </button>
+          <button
+            type="submit"
+            onClick={resetFilter}
+            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white  bg-red-800 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-800 border dark:text-white dark:border-slate-300 hover:bg-red-900 disabled:opacity-80 hover:cursor-pointer"
+            disabled={loading}>
+            Reset
+            {loading && <Spinner className="ml-2 h-5 w-5" />}
+          </button>
+        </div>
       </div>
     </div>
   );

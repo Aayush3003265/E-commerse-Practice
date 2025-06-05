@@ -15,12 +15,12 @@ const ProductCard = ({ product }) => {
             width={500}
             src={product.imageUrls[0] || cartImg}
             alt="img"
-            className="w-full max-h-32 rounded-t-2xl object-cover"
+            className="w-full h-44 rounded-t-2xl object-cover"
           />
         </div>
       </Link>
 
-      <div className="pt-5 pb-10 px-6 dark:bg-gray-300 rounded-t-sm">
+      <div className="pt-5 pb-10 px-6 dark:bg-gray-600 rounded-t-sm rounded-b-2xl bg-white dark:text-white">
         <span className="bg-amber-300 text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-amber-300 dark:text-black">
           {product.category}
         </span>
@@ -28,12 +28,14 @@ const ProductCard = ({ product }) => {
           {product.brand}
         </span>
         <Link href={`${PRODUCTS_ROUTE}/${product.id}`}>
-          <h2 className="text-2xl font-semibold truncate mt-2 text-black hover:underline">
+          <h2 className="text-2xl font-semibold truncate mt-2 text-black hover:underline dark:text-white">
             {product.name}
           </h2>
         </Link>
 
-        <p className="mt-2 font-bold text-black text-lg">$ {product.price}</p>
+        <p className="mt-2 font-bold text-black text-lg dark:text-white">
+          $ {product.price}
+        </p>
         <AddToCart />
       </div>
     </div>
