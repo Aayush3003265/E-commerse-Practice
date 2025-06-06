@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import React from "react";
 import cartImg from "@/app/assets/images/shopping-cart.png";
@@ -36,7 +37,7 @@ const ProductCard = ({ product }) => {
         <p className="mt-2 font-bold text-black text-lg dark:text-white">
           $ {product.price}
         </p>
-        <AddToCart />
+        <AddToCart product={product} />
       </div>
     </div>
   );

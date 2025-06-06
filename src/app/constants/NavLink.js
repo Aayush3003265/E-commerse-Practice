@@ -31,7 +31,7 @@ let routeLink = [
   {
     route: "/cart",
     name: "Cart",
-    isAuth: true,
+    isAuth: false,
   },
 ];
 

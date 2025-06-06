@@ -16,7 +16,6 @@ const ProductsTable = ({ products }) => {
     try {
       setShowModal(true);
       setSelectedProduct(product);
-      // deleteProduct(id);
     } catch (error) {
       toast.error("Error");
     }

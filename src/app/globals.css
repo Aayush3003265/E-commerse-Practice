@@ -7,8 +7,8 @@
 }
 
 @custom-variant dark (&:where(.dark,.dark *));
-/* 
-/* @theme inline{
+
+ @theme inline{
     --color-primary:var(--primary);
     --color-secondary:var(--secondary);
-} */ 
+} 

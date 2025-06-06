@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Spinner from "./Spinner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PRODUCTS_ROUTE } from "@/app/constants/Routes";
 
 const DEFAULT_SORT = JSON.stringify({ createdAt: -1 });
@@ -12,6 +12,7 @@ const DEFAULT_BRANDS_FILLTER = [];
 const DEFAULT_CATEGORY_FILTER = "";
 
 const Drawer = ({ showFilter = true, setShowFilter, brands, categories }) => {
+  const searchparams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [maxPrice, setMaxPrice] = useState(DEFAULT_MAX_PRICE);
   const [minPrice, setMinPrice] = useState(DEFAULT_MIN_PRICE);
@@ -27,12 +28,12 @@ const Drawer = ({ showFilter = true, setShowFilter, brands, categories }) => {
     );
   };
 
-  useEffect(() => {
-    console.log(categories);
-  }, []);
+  // useEffect(() => {
+  //   console.log(categories);
+  // }, []);
   const router = useRouter();
   const setfilters = () => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchparams.toString());
     params.set("min", minPrice);
     params.set("max", maxPrice);
     params.set("sort", sort);
