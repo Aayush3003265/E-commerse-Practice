@@ -5,17 +5,13 @@ import placeholder from "@/app/assets/images/shopping-cart.png";
 import { GoPlus } from "react-icons/go";
 import { RiSubtractFill } from "react-icons/ri";
 import { decreaseQuantity, increaseQuantity } from "@/redux/cart/cartSlice";
+import { IoIosCog } from "react-icons/io";
+import { FaTrashAlt } from "react-icons/fa";
 
-const CartTable = () => {
-  const { products } = useSelector((state) => state.cart);
+const CartTable = ({ products }) => {
+  // const { products } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  if (products.length == 0)
-    return (
-      <div className="text-center text-3xl text-primary font-bold">
-        Cart Is Empty
-      </div>
-    );
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -33,8 +29,10 @@ const CartTable = () => {
             <th scope="col" className="px-6 py-3 text-center text-xl">
               Price
             </th>
-            <th scope="col" className="px-6 py-3 text-center text-xl">
-              Action
+            <th
+              scope="col"
+              className="px-6 py-3 flex items-center justify-center text-xl">
+              <IoIosCog className="h-7 w-7" />
             </th>
           </tr>
         </thead>
@@ -73,7 +71,10 @@ const CartTable = () => {
                     <button
                       onClick={() => dispatch(increaseQuantity(actualproduct))}
                       className="inline-flex items-center justify-center p-1 me-3 ms-2.5 h-7 w-7 rounded-full hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                      type="button">
+                      type="button"
+                      disabled={
+                        item.quantity >= (actualproduct.price > 100000 ? 4 : 15)
+                      }>
                       <GoPlus className="h-7 w-7" />
                     </button>
                   </div>
@@ -82,11 +83,13 @@ const CartTable = () => {
                   $ {actualproduct.price}
                 </td>
                 <td className="px-6 py-4">
-                  <a
-                    href="#"
-                    className="font-medium text-red-600 dark:text-red-500 hover:underline">
-                    Remove
-                  </a>
+                  <button
+                    // href={`/product-Management/${product.id}/edit`}
+                    className="font-medium text-blue-600 dark:text-blue-500  hover:underline">
+                    <div>
+                      <FaTrashAlt className="h-6 w-6 bg-red-600 text-white p-1 rounded-md" />
+                    </div>
+                  </button>
                 </td>
               </tr>
             );

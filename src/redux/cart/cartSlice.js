@@ -31,25 +31,31 @@ const cartSlice = createSlice({
       }
 
       //for total price
+
       state.totalPrice = state.products.reduce((total, item) => {
-        total = item.price + state.totalPrice;
-        return total;
+        return total + item.product.price * item.quantity;
       }, 0);
     },
 
     removefromcart: (state, action) => {},
     increaseQuantity: (state, action) => {
       const newProduct = action.payload;
+      let updated = false;
+
       state.products = state.products.map((item) => {
         if (item.product.id === newProduct.id) {
-          const maxQuantityfor1lakhs = item.product.price > 100000 ? 7 : 15;
-          if (item.quantity < maxQuantityfor1lakhs) {
+          const maxQuantityForONeLakhs = item.product.price > 100000 ? 4 : 15;
+          if (item.quantity < maxQuantityForONeLakhs) {
+            updated = true;
             return { ...item, quantity: item.quantity + 1 };
           }
         }
         return item;
       });
-      state.totalPrice += newProduct.price;
+
+      if (updated) {
+        state.totalPrice += newProduct.price;
+      }
     },
 
     decreaseQuantity: (state, action) => {
