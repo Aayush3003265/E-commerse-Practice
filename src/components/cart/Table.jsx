@@ -7,10 +7,19 @@ import { RiSubtractFill } from "react-icons/ri";
 import { decreaseQuantity, increaseQuantity } from "@/redux/cart/cartSlice";
 import { IoIosCog } from "react-icons/io";
 import { FaTrashAlt } from "react-icons/fa";
+import { useState } from "react";
+import RemoveFromCartModal from "./Modal";
 
 const CartTable = ({ products }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState();
   // const { products } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
+  const removeBtnClicked = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -28,6 +37,9 @@ const CartTable = ({ products }) => {
             </th>
             <th scope="col" className="px-6 py-3 text-center text-xl">
               Price
+            </th>
+            <th scope="col" className="px-6 py-3 text-center text-xl">
+              Total Price
             </th>
             <th
               scope="col"
@@ -58,8 +70,13 @@ const CartTable = ({ products }) => {
                 <td className="px-6 py-4">
                   <div className="flex items-center justify-center">
                     <button
+                      disabled={item.quantity === 1}
                       onClick={() => dispatch(decreaseQuantity(actualproduct))}
-                      className="inline-flex items-center justify-center p-1 me-3  h-7 w-7 rounded-full hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                      className="inline-flex items-center justify-center p-1
+                      me-3 h-7 w-7 rounded-full hover:bg-gray-100 focus:ring-4
+                      focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400
+                      dark:border-gray-600 dark:hover:bg-gray-700
+                      dark:hover:border-gray-600 dark:focus:ring-gray-700"
                       type="button">
                       <RiSubtractFill className="h-7 w-7" />
                     </button>
@@ -82,10 +99,15 @@ const CartTable = ({ products }) => {
                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                   $ {actualproduct.price}
                 </td>
+                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                  $ {actualproduct.price * item.quantity}
+                </td>
                 <td className="px-6 py-4">
                   <button
+                    onClick={() => removeBtnClicked(actualproduct)}
                     // href={`/product-Management/${product.id}/edit`}
-                    className="font-medium text-blue-600 dark:text-blue-500  hover:underline">
+                    className="font-medium text-blue-600 dark:text-blue-500
+                    hover:underline">
                     <div>
                       <FaTrashAlt className="h-6 w-6 bg-red-600 text-white p-1 rounded-md" />
                     </div>
@@ -96,6 +118,12 @@ const CartTable = ({ products }) => {
           })}
         </tbody>
       </table>
+      <RemoveFromCartModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        selectedProduct={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
+      />
     </div>
   );
 };

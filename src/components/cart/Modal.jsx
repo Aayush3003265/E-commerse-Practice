@@ -1,28 +1,22 @@
-import { deleteProduct } from "@/api/products";
 import React, { useState } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
-import Spinner from "./Spinner";
+// import Spinner from "./Spinner";
 import { useDispatch } from "react-redux";
-import { setDeleteStatus } from "@/redux/product/productSlice";
+import { removefromcart } from "@/redux/cart/cartSlice";
 
-const Modal = ({ showModal, setShowModal, product, setSelectedProduct }) => {
-  const [loading, setLoading] = useState(false);
+const RemoveFromCartModal = ({
+  showModal,
+  setShowModal,
+  selectedProduct,
+  setSelectedProduct,
+}) => {
   const dispatch = useDispatch();
-  const confirmDelete = () => {
-    setLoading(true);
-    try {
-      deleteProduct(product?.id);
-      toast.success("Deleted Sucessfully", { autoClose: 750 });
-      dispatch(setDeleteStatus("success"));
-    } catch (error) {
-      toast.error(error.response.data, { autoClose: 750 });
-    } finally {
-      setLoading(false);
-      setShowModal(false);
-      setSelectedProduct(null);
-    }
+  const confirmRemoveFromCart = () => {
+    dispatch(removefromcart(selectedProduct));
+    setShowModal(false);
+    toast.success("Product Deleted Successfully", { autoClose: 750 });
   };
   return (
     <div className={showModal ? "block" : "hidden"}>
@@ -44,16 +38,14 @@ const Modal = ({ showModal, setShowModal, product, setSelectedProduct }) => {
               <p className="text-xl mb-2 dark:text-gray-200">
                 Product:{" "}
                 <i>
-                  <span className="font-bold">{product?.name}</span>
+                  <span className="font-bold">{selectedProduct?.name}</span>
                 </i>
               </p>
 
               <button
-                onClick={confirmDelete}
-                disabled={loading}
+                onClick={confirmRemoveFromCart}
                 className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center disabled:opacity-80">
                 Yes, I'm sure
-                {loading && <Spinner className="h-4 w-4 ml-2 fill-red-500" />}
               </button>
 
               <button
@@ -69,4 +61,4 @@ const Modal = ({ showModal, setShowModal, product, setSelectedProduct }) => {
   );
 };
 
-export default Modal;
+export default RemoveFromCartModal;

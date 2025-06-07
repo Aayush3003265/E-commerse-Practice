@@ -37,7 +37,16 @@ const cartSlice = createSlice({
       }, 0);
     },
 
-    removefromcart: (state, action) => {},
+    removefromcart: (state, action) => {
+      const productToRemove = action.payload;
+      state.products = state.products.filter(
+        (item) => item.product.id !== productToRemove.id
+      );
+      // Recalculate total price
+      state.totalPrice = state.products.reduce((total, item) => {
+        return total + item.product.price * item.quantity;
+      }, 0);
+    },
     increaseQuantity: (state, action) => {
       const newProduct = action.payload;
       let updated = false;

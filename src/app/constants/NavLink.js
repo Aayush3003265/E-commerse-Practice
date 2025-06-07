@@ -22,17 +22,11 @@ let routeLink = [
     name: "Products",
     isAuth: false,
   },
-  {
-    route: "/courses",
-    name: "Courses",
-    isAuth: false,
-  },
-
-  {
-    route: "/cart",
-    name: "Cart",
-    isAuth: false,
-  },
+  // {
+  //   route: "/courses",
+  //   name: "Courses",
+  //   isAuth: false,
+  // },
 ];
 
 export default routeLink;
