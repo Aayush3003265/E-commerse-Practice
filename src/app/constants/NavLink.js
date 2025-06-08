@@ -1,4 +1,9 @@
-import { HOME_ROUTE, PRODUCTS_ROUTE } from "./Routes";
+import {
+  ABOUT_ROUTE,
+  CONTACT_ROUTE,
+  HOME_ROUTE,
+  PRODUCTS_ROUTE,
+} from "./Routes";
 
 let routeLink = [
   {
@@ -7,13 +12,13 @@ let routeLink = [
     isAuth: false,
   },
   {
-    route: "/about",
+    route: ABOUT_ROUTE,
     name: "About",
     isAuth: false,
   },
 
   {
-    route: "/contact",
+    route: CONTACT_ROUTE,
     name: "Contact",
     isAuth: false,
   },
@@ -28,5 +33,4 @@ let routeLink = [
   //   isAuth: false,
   // },
 ];
-
 export default routeLink;

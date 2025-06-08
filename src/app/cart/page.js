@@ -9,8 +9,8 @@ const Cartpage = () => {
   return (
     <div className="dark:bg-slate-800 bg-gray-50 min-h-screen">
       <div className=" container mx-auto p-4 py-16">
-        <div className="flex justify-between">
-          <h1 className="text-3xl dark:text-white pb-5 font-semibold">
+        <div className="grid grid-cols-[1fr_auto]">
+          <h1 className="text-3xl dark:text-white pb-5 w-[200px] font-semibold">
             Your Cart
           </h1>
           <p className="text-xl dark:text-white">
@@ -20,10 +20,16 @@ const Cartpage = () => {
         {products.length > 0 ? (
           <div>
             <CartTable products={products} />
-            <div>
-              <span className="text-xl border p-2 m-4 float-end dark:text-gray-100">
+            <div className="flex justify-between items-center">
+              <span className="text-xl border p-2 m-4 dark:text-gray-100 rounded-md ">
                 Total : <span className="font-bold">(RS {totalPrice})</span>
               </span>
+              <div>
+                <button className="text-xl border p-2 m-4 bg-blue-600 text-white rounded-md hover:opacity-80 hover:cursor-pointer dark:text-gray-100">
+                  {" "}
+                  Checkout |<span className="font-bold"> {totalPrice}</span>
+                </button>
+              </div>
             </div>
           </div>
         ) : (
