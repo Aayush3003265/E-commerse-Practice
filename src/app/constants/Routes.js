@@ -8,3 +8,4 @@ export const USER_MANAGEMENT_ROUTE = "/user-Management";
 export const CART_ROUTE = "/cart";
 export const CONTACT_ROUTE = "/contact";
 export const ABOUT_ROUTE = "/about";
+export const ORDER_MANAGEMENT_ROUTE = "/order-Management";

@@ -1,4 +1,5 @@
 "use client";
+import Checkout from "@/components/cart/checkout";
 import CartTable from "@/components/cart/Table";
 import { useSelector } from "react-redux";
 
@@ -20,17 +21,7 @@ const Cartpage = () => {
         {products.length > 0 ? (
           <div>
             <CartTable products={products} />
-            <div className="flex justify-between items-center">
-              <span className="text-xl border p-2 m-4 dark:text-gray-100 rounded-md ">
-                Total : <span className="font-bold">(RS {totalPrice})</span>
-              </span>
-              <div>
-                <button className="text-xl border p-2 m-4 bg-blue-600 text-white rounded-md hover:opacity-80 hover:cursor-pointer dark:text-gray-100">
-                  {" "}
-                  Checkout |<span className="font-bold"> {totalPrice}</span>
-                </button>
-              </div>
-            </div>
+            <Checkout totalPrice={totalPrice} products={products} />
           </div>
         ) : (
           <div className="text-center text-3xl text-primary dark:text-gray-100 font-bold">
